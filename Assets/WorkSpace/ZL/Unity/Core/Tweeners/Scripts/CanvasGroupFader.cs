@@ -40,6 +40,12 @@ namespace ZL.Unity.UI
 
         [SerializeField]
 
+        [UsingCustomProperty]
+
+        [PropertyField]
+
+        [Button(nameof(ToggleFaded))]
+
         private bool isFadedIn = false;
 
         public bool IsFadedIn
@@ -92,17 +98,14 @@ namespace ZL.Unity.UI
 
         private bool interactable;
 
-        private void OnValidate()
-        {
-            if (Application.isPlaying == true)
-            {
-                SetFaded(isFadedIn);
-            }
-        }
-
         private void Awake()
         {
             IsFadedIn = isFadedIn;
+        }
+
+        public void ToggleFaded()
+        {
+            SetFaded(!isFadedIn);
         }
 
         public void SetFaded(bool value)

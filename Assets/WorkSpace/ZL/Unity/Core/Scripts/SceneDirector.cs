@@ -67,28 +67,16 @@ namespace ZL.Unity
 
         public void FadeIn()
         {
-            if (ISingleton<AudioListenerVolumeTweener>.Instance != null)
-            {
-                ISingleton<AudioListenerVolumeTweener>.Instance.Tween(1f, fadeDuration);
-            }
+            ISingleton<AudioListenerVolumeTweener>.Instance?.Tween(1f, fadeDuration);
 
-            if (screenFader != null)
-            {
-                screenFader.SetFaded(false, fadeDuration);
-            }
+            screenFader?.SetFaded(false, fadeDuration);
         }
 
         public void FadeOut()
         {
-            if (ISingleton<AudioListenerVolumeTweener>.Instance != null)
-            {
-                ISingleton<AudioListenerVolumeTweener>.Instance.Tween(0f, fadeDuration);
-            }
+            ISingleton<AudioListenerVolumeTweener>.Instance?.Tween(0f, fadeDuration);
 
-            if (screenFader != null)
-            {
-                screenFader.SetFaded(true, fadeDuration);
-            }
+            screenFader?.SetFaded(true, fadeDuration);
         }
 
         public void Pause()

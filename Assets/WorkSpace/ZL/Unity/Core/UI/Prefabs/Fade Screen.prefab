@@ -104,11 +104,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tweener:
     duration: 0
+    delay: 0
+    ease: 0
+    isIndependentUpdate: 1
     loop: 0
     loopCount: -1
     loopType: 0
-    ease: 0
-    isIndependentUpdate: 1
   canvasGroup: {fileID: 7764160314332781730}
 --- !u!114 &7385273142717139498
 MonoBehaviour:
@@ -125,7 +126,13 @@ MonoBehaviour:
   canvasGroup: {fileID: 7764160314332781730}
   alphaTweener: {fileID: 5449394640197298269}
   isFadedIn: 1
+  eventOnFadingIn:
+    m_PersistentCalls:
+      m_Calls: []
   eventOnFadeIn:
+    m_PersistentCalls:
+      m_Calls: []
+  eventOnFadingOut:
     m_PersistentCalls:
       m_Calls: []
   eventOnFadeOut:

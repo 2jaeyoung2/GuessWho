@@ -60,6 +60,13 @@ namespace ZL.Unity.Tweeners
 
         private bool loop = false;
 
+        public bool Loop
+        {
+            get => loop;
+
+            set => loop = value;
+        }
+
         [SerializeField]
 
         [UsingCustomProperty]
@@ -71,6 +78,13 @@ namespace ZL.Unity.Tweeners
         [Alias("Count")]
 
         private int loopCount = -1;
+
+        public int LoopCount
+        {
+            get => loopCount;
+
+            set => loopCount = value;
+        }
 
         [SerializeField]
 
@@ -85,6 +99,13 @@ namespace ZL.Unity.Tweeners
         [PropertyField]
 
         private LoopType loopType = LoopType.Restart;
+
+        public LoopType LoopType
+        {
+            get => loopType;
+
+            set => loopType = value;
+        }
 
         protected DOGetter<T1> getter;
 

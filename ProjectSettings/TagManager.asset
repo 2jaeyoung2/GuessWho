@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Popup Screen
+    uniqueID: 1073937019
+    locked: 0
+  - name: Fade Screen
+    uniqueID: 3963282643
+    locked: 0
