@@ -1,6 +1,10 @@
+﻿using DG.Tweening;
+
 using UnityEngine;
 
 using UnityEngine.Events;
+
+using ZL.Unity.Tweeners;
 
 namespace ZL.Unity.UI
 {
@@ -8,38 +12,162 @@ namespace ZL.Unity.UI
 
     [DisallowMultipleComponent]
 
+    [RequireComponent(typeof(CanvasGroupAlphaTweener))]
+
     public class UGUIScreen : MonoBehaviour
     {
+        [SerializeField]
+
+        [UsingCustomProperty]
+
+        [GetComponent]
+
+        [Toggle(true)]
+
+        private CanvasGroup canvasGroup;
+
+        [SerializeField]
+
+        [UsingCustomProperty]
+
+        [GetComponent]
+
+        [Toggle(true)]
+
+        private CanvasGroupAlphaTweener alphaTweener;
+
+        [SerializeField]
+
+        [UsingCustomProperty]
+
+        [GetComponent]
+
+        [Toggle(true)]
+
+        private UGUIScreenSwapper swapper;
+
         [Space]
 
         [SerializeField]
 
         [UsingCustomProperty]
 
-        [ReadOnly(true)]
+        [PropertyField]
 
-        [GetComponentInParent]
+        [ReadOnlyWhenEditMode]
 
-        private UGUIScreenSwapper swapper;
+        [Button(nameof(ToggleFaded))]
 
-        public virtual void Open()
+        private bool isFadedIn = false;
+
+        public bool IsFadedIn
         {
-            if (swapper != null)
+            get => isFadedIn;
+
+            set
             {
-                swapper.Current?.Close();
+                isFadedIn = value;
 
-                swapper.Current = this;
+                if (isFadedIn == true)
+                {
+                    gameObject.SetActive(true);
 
-                swapper.Last = this;
+                    canvasGroup.alpha = 1f;
+                }
+
+                else
+                {
+                    canvasGroup.alpha = 0f;
+
+                    gameObject.SetActive(false);
+                }
             }
         }
 
-        public virtual void Close()
+        [Space]
+
+        [SerializeField]
+
+        private UnityEvent eventOnFadingIn;
+
+        [SerializeField]
+
+        private UnityEvent eventOnFadedIn;
+
+        [SerializeField]
+
+        private UnityEvent eventOnFadingOut;
+
+        [SerializeField]
+
+        private UnityEvent eventOnFadedOut;
+
+        private void Awake()
+        {
+            IsFadedIn = isFadedIn;
+        }
+
+        public void ToggleFaded()
+        {
+            SetFaded(!isFadedIn);
+        }
+
+        public void SetFaded(bool value)
+        {
+            SetFaded(value, alphaTweener.Tweener.Duration);
+        }
+
+        public void SetFaded(bool value, float duration)
+        {
+            isFadedIn = value;
+
+            if (isFadedIn == true)
+            {
+                OnFadingIn();
+
+                alphaTweener.Tween(1f, duration).OnComplete(OnFadedIn);
+            }
+
+            else
+            {
+                OnFadingOut();
+
+                alphaTweener.Tween(0f, duration).OnComplete(OnFadedOut);
+            }
+        }
+
+        protected virtual void OnFadingIn()
+        {
+            if (swapper != null)
+            {
+                swapper.SetCurrent(this);
+            }
+
+            gameObject.SetActive(true);
+
+            eventOnFadingIn.Invoke();
+        }
+
+        protected virtual void OnFadedIn()
+        {
+            eventOnFadedIn.Invoke();
+        }
+
+        protected virtual void OnFadingOut()
         {
             if (swapper != null)
             {
                 swapper.Current = null;
             }
+
+            eventOnFadingOut.Invoke();
+        }
+
+        protected virtual void OnFadedOut()
+        {
+            eventOnFadedOut.Invoke();
+
+            gameObject.SetActive(false);
         }
     }
 }

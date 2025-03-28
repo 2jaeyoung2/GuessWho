@@ -12,17 +12,15 @@ namespace ZL.Unity.Server.Photon
 
     [RequireComponent(typeof(PhotonView))]
 
-    public sealed class PhotonManager :
-        
-        MonoBehaviour, IMonoSingleton<PhotonManager>
+    public sealed class PhotonManager : MonoBehaviour, IMonoSingleton<PhotonManager>
     {
         [SerializeField]
 
         [UsingCustomProperty]
 
-        [GetComponent]
+        [ReadOnly(true)]
 
-        [Toggle(true)]
+        [GetComponent]
 
         private PhotonView photonView;
 
@@ -30,12 +28,12 @@ namespace ZL.Unity.Server.Photon
 
         private void Awake()
         {
-            IMonoSingleton<PhotonManager>.TrySetInstance(this);
+            ISingleton<PhotonManager>.TrySetInstance(this);
         }
 
         private void OnDestroy()
         {
-            IMonoSingleton<PhotonManager>.Release(this);
+            ISingleton<PhotonManager>.Release(this);
         }
 
         public void RPCLog(RpcTarget target, object message)

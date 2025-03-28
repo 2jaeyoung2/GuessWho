@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3106817882500239280
+--- !u!1001 &2968728523978062479
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4423705409128867772, guid: c34e0d518d94f014c9255ec4e29356bc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -222.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4423705409128867772, guid: c34e0d518d94f014c9255ec4e29356bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -97,10 +97,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c34e0d518d94f014c9255ec4e29356bc, type: 3}
---- !u!224 &1619478128090654732 stripped
+--- !u!224 &1465678122594704691 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4423705409128867772, guid: c34e0d518d94f014c9255ec4e29356bc, type: 3}
-  m_PrefabInstance: {fileID: 3106817882500239280}
+  m_PrefabInstance: {fileID: 2968728523978062479}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5557950773720883380
 PrefabInstance:
@@ -120,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1935975645501175686, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -222.5
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 1935975645501175686, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -129,6 +129,10 @@ PrefabInstance:
     - target: {fileID: 1935975645501175686, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404424237074774268, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 505
       objectReference: {fileID: 0}
     - target: {fileID: 5037600968028591810, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_Name
@@ -144,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5499842037260510847, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6762976567050818219, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_fontSize
@@ -264,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9216823255765059304, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -222.5
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 9216823255765059304, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -285,7 +289,7 @@ PrefabInstance:
       addedObject: {fileID: 9193230337142925269}
     - targetCorrespondingSourceObject: {fileID: 1935975645501175686, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1619478128090654732}
+      addedObject: {fileID: 1465678122594704691}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 436942ef15f207143add23ad1fe5d6fd, type: 3}
 --- !u!224 &3659584965933409884 stripped

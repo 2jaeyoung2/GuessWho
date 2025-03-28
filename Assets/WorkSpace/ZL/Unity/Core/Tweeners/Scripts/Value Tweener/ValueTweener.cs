@@ -6,6 +6,8 @@ using DG.Tweening.Plugins.Options;
 
 using UnityEngine;
 
+using UnityEngine.Events;
+
 namespace ZL.Unity.Tweeners
 {
     public abstract class ValueTweener<T1, T2, TPlugOptions>
@@ -107,7 +109,7 @@ namespace ZL.Unity.Tweeners
             set => loopType = value;
         }
 
-        protected DOGetter<T1> getter;
+        protected DOGetter<T1> getter = null;
 
         public DOGetter<T1> Getter
         {
@@ -116,13 +118,28 @@ namespace ZL.Unity.Tweeners
             set => getter = value;
         }
 
-        protected DOSetter<T1> setter;
+        protected DOSetter<T1> setter = null;
 
         public DOSetter<T1> Setter
         {
             get => setter;
 
             set => setter = value;
+        }
+
+        [SerializeField]
+
+        private UnityEvent eventOnStart = null;
+
+        [SerializeField]
+
+        private UnityEvent eventOnComplete = null;
+
+        public UnityEvent EventOnComplete
+        {
+            get => eventOnComplete;
+
+            set => eventOnComplete = value;
         }
 
         public TweenerCore<T1, T2, TPlugOptions> Current { get; private set; }
@@ -154,6 +171,16 @@ namespace ZL.Unity.Tweeners
             if (loop == true)
             {
                 Current.SetLoops(loopCount, loopType);
+            }
+
+            if (eventOnStart != null)
+            {
+                Current.OnStart(eventOnStart.Invoke);
+            }
+
+            if (eventOnComplete != null)
+            {
+                Current.OnComplete(eventOnComplete.Invoke);
             }
 
             Current.SetAutoKill(false);

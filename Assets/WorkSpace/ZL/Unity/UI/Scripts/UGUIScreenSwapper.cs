@@ -18,19 +18,30 @@ namespace ZL.Unity.UI
 
         public UGUIScreen Last { get; set; } = null;
 
-        public virtual void OpenMainScreen()
+        public void SetCurrent(UGUIScreen newCurrent)
         {
-            main?.Open();
+            Current?.SetFaded(false);
+
+            Current = newCurrent;
+
+            Last = newCurrent;
+
+            newCurrent.transform.SetAsLastSibling();
         }
 
-        public virtual void closeCurrentScreen()
+        public virtual void OpenMainScreen()
         {
-            Current?.Close();
+            main?.SetFaded(true);
+        }
+
+        public virtual void CloseCurrentScreen()
+        {
+            Current?.SetFaded(false);
         }
 
         public virtual void OpenLastScreen()
         {
-            Last?.Open();
+            Last?.SetFaded(true);
         }
     }
 }

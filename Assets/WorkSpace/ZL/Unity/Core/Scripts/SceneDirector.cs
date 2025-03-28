@@ -26,7 +26,7 @@ namespace ZL.Unity
 
         [SerializeField]
 
-        protected CanvasGroupFader screenFader;
+        protected UGUIScreen screenFader;
 
         [SerializeField]
 

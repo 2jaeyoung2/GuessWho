@@ -16,49 +16,28 @@ namespace ZL.Unity.Collections
 
         public int Index
         {
-            get => index;
+            get
+            {
+                return index;
+            }
 
             set
             {
                 index = value;
-
-                if (index.IsOutOfRange(0, list.Count) == true)
-                {
-                    return;
-                }
-
-                switch (loopType)
-                {
-                    case LoopType.Clamp:
-
-                        index = index.Clamp(0, list.Count);
-
-                        break;
-
-                    case LoopType.Repeat:
-
-                        index = index.Repeat(0, list.Count);
-
-                        break;
-
-                    case LoopType.PingPong:
-
-                        index = index.PingPong(0, list.Count);
-
-                        break;
-                }
             }
         }
 
         [SerializeField]
 
-        private LoopType loopType = LoopType.None;
+        private LoopPattern loopType = LoopPattern.Clamp;
 
         [Space]
 
         [SerializeField]
 
         private List<T> list = new();
+
+        public int Count => list.Count;
 
         public bool TryGetCurrent(out T result)
         {
@@ -69,20 +48,9 @@ namespace ZL.Unity.Collections
                 return false;
             }
 
-            result = list[index];
+            result = list[index.Loop(0, Count - 1, loopType)];
 
             return true;
-        }
-
-        public enum LoopType
-        {
-            None,
-
-            Clamp,
-
-            Repeat,
-
-            PingPong,
         }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2556278594202352198}
   - component: {fileID: 5085792523640300130}
   - component: {fileID: 3076877877701199034}
+  - component: {fileID: 1967187563167769152}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -31,8 +32,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3784489904618395855}
   - {fileID: 9126579694092051174}
+  - {fileID: 3784489904618395855}
   m_Father: {fileID: 2898045611417588787}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -103,6 +104,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1967187563167769152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194404443444025997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9298e180653c924f8c7b913ae1a86e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  main: {fileID: 0}
 --- !u!1 &2791926258701222973
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3b883a7b9af6449acbad1bd465f64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fakeLoadingTime: 1
+  fakeLoadingTime: 0
   eventOnConnectingToMaster:
     m_PersistentCalls:
       m_Calls:
@@ -205,6 +219,10 @@ PrefabInstance:
     - target: {fileID: 4757776406693451017, guid: 36b4ca153d5acc94ea1924fcf9a95ff2, type: 3}
       propertyPath: m_Name
       value: Server Disconnected Popup Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5457657126008448436, guid: 36b4ca153d5acc94ea1924fcf9a95ff2, type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8273252824448314279, guid: 36b4ca153d5acc94ea1924fcf9a95ff2, type: 3}
       propertyPath: m_Pivot.x
@@ -292,11 +310,11 @@ PrefabInstance:
       objectReference: {fileID: 6544513726170871492}
     - target: {fileID: 9019107688394855776, guid: 36b4ca153d5acc94ea1924fcf9a95ff2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnConnected
+      value: ConnectToMaster
       objectReference: {fileID: 0}
     - target: {fileID: 9019107688394855776, guid: 36b4ca153d5acc94ea1924fcf9a95ff2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Photon.Pun.MonoBehaviourPunCallbacks, PhotonUnityNetworking
+      value: ZL.Unity.Server.Photon.PhotonServerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -311,7 +329,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0077f8ded3f464a80f2161ff974bc7, type: 3}
+  m_Script: {fileID: 11500000, guid: c7de13888ac3b1b4eb71afaf13b8cf43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &9126579694092051174 stripped
@@ -335,18 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Connecting To Server Popup Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 3659584965933409884, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 75
+    - target: {fileID: 633012671804847734, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3953952605360108048, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-      propertyPath: canvasGroup
-      value: 
-      objectReference: {fileID: 1002108251203245788}
-    - target: {fileID: 3953952605360108048, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-      propertyPath: alphaTweener
-      value: 
-      objectReference: {fileID: 4740629949798127311}
     - target: {fileID: 4044111900457306328, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -427,20 +437,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5571161707053532888, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-      propertyPath: canvasGroup
-      value: 
-      objectReference: {fileID: 1002108251203245788}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
---- !u!225 &1002108251203245788 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 104308441405834955, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-  m_PrefabInstance: {fileID: 908222841129062423}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3784489904618395855 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4044111900457306328, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
@@ -454,17 +455,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0077f8ded3f464a80f2161ff974bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4740629949798127311 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5571161707053532888, guid: 7dccc7f2ae51031418518b4554cce106, type: 3}
-  m_PrefabInstance: {fileID: 908222841129062423}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baa6ef35b2c9ff1439d8656aa9dbd5f6, type: 3}
+  m_Script: {fileID: 11500000, guid: c7de13888ac3b1b4eb71afaf13b8cf43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

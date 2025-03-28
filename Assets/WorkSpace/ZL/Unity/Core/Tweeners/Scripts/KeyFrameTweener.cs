@@ -26,18 +26,40 @@ namespace ZL.Unity.Tweeners
 
         protected TComponentTweener componentTweener;
 
+#if UNITY_EDITOR
+
+        [Space]
+
+        [SerializeField]
+
+        private bool preview = false;
+
+#endif
+
         [Space]
 
         [SerializeField]
 
         protected LoopList<T2> keyFrames;
 
-        private void Awake()
+#if UNITY_EDITOR
+
+        private void OnValidate()
         {
-            SetKeyFrame(keyFrames.Index);
+            if (preview == true)
+            {
+                SetKeyFrame();
+            }
         }
 
-        public abstract void SetKeyFrame(int index);
+#endif
+
+        private void Awake()
+        {
+            SetKeyFrame();
+        }
+
+        public abstract void SetKeyFrame();
 
         public void TweenKeyFrameNext()
         {
