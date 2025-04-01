@@ -248,12 +248,6 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         inGamePlayerList.UpdateAlivePlayerCount();
     }
 
-    // V RPC Methods
-    [PunRPC]
-    private void SyncHitState(bool hit)
-    {
-        isHit = hit;
-    }
 
     void StoneThrow()
     {
@@ -263,6 +257,12 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         }
     }
 
+    // V RPC Methods
+    [PunRPC]
+    private void SyncHitState(bool hit)
+    {
+        isHit = hit;
+    }
 
     [PunRPC]
     private void InstantiateStone(int whoThrow)

@@ -44,12 +44,7 @@ public class AttackState : IPlayerStates
             case (ItemType.Stone):
 
                 player.StartCoroutine(AttackThrow());
-                player.leftBullet--;
-
-                if(player.leftBullet == 0)
-                {
-                    player.nowHaveItems[1] = null;
-                }
+                
                 break;
 
             case (ItemType.Gun):
@@ -126,8 +121,12 @@ public class AttackState : IPlayerStates
 
     IEnumerator AttackShoot()
     {
-        Debug.Log("ÃÑ ½î±â");
-        yield return null;
+        player.playerAnim.SetBool("IsShoot", true);
+
+        player.weapons[2].SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        player.playerAnim.SetBool("IsShoot", false);
+
         player.isAttackTriggered = false;
     }
 }
