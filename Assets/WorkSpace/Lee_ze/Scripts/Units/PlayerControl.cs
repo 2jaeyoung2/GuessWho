@@ -2,8 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
-using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
-using Unity.VisualScripting; //Photon Hashtable
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable; //Photon Hashtable
+using System;
+using System.Data;
 
 public class PlayerControl : MonoBehaviourPun, IHittable
 {
@@ -12,6 +13,8 @@ public class PlayerControl : MonoBehaviourPun, IHittable
     public Animator playerAnim;
 
     private InGamePlayerList inGamePlayerList;
+
+    private ExitGame exitGame;
 
 
     [Header("Move"), Space(10)]
@@ -85,6 +88,8 @@ public class PlayerControl : MonoBehaviourPun, IHittable
     private void Start()
     {
         inGamePlayerList = FindObjectOfType<InGamePlayerList>();
+
+        exitGame = FindObjectOfType<ExitGame>();
 
         if (photonView.IsMine)
         {
@@ -176,24 +181,24 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         {
             nowWeaponArrayNum++;
 
-            if(nowWeaponArrayNum < 3)
+            if (nowWeaponArrayNum < 3)
             {
                 holdingWeapon = nowHaveItems[nowWeaponArrayNum];
             }
-            
-            else if(nowWeaponArrayNum >= 3)
+
+            else if (nowWeaponArrayNum >= 3)
             {
                 nowWeaponArrayNum = 0;
                 holdingWeapon = nowHaveItems[nowWeaponArrayNum];
 
             }
 
-            if(holdingWeapon != null)
+            if (holdingWeapon != null)
             {
                 UnityEngine.Debug.Log(holdingWeapon.name);
             }
 
-            else if(holdingWeapon == null)
+            else if (holdingWeapon == null)
             {
                 UnityEngine.Debug.Log("null");
             }
@@ -229,6 +234,8 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         if (photonView.IsMine)
         {
             SetIsHit(true);
+
+            exitGame.OnExitButton();
         }
 
         photonView.RPC("SyncHitState", RpcTarget.Others, true);
@@ -275,7 +282,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(rayPosition, rayDirection, out hit, gunRange)) 
+            if (Physics.Raycast(rayPosition, rayDirection, out hit, gunRange))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
