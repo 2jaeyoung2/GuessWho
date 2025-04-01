@@ -2,7 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
-using PhotonHashtable = ExitGames.Client.Photon.Hashtable; //Photon Hashtable
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
+using Unity.VisualScripting; //Photon Hashtable
 
 public class PlayerControl : MonoBehaviourPun, IHittable
 {
@@ -29,6 +30,8 @@ public class PlayerControl : MonoBehaviourPun, IHittable
 
     public int nowWeaponArrayNum = 0;
 
+    public bool canShoot = true;
+
 
     [Space(20), Header("Attack"), Space(10)]
 
@@ -45,6 +48,8 @@ public class PlayerControl : MonoBehaviourPun, IHittable
     public ItemData nowWeapon;
 
     public GameObject itemStonePrefab;
+
+    public GameObject gunFire;
 
     public bool isHit = false;
 
@@ -256,7 +261,72 @@ public class PlayerControl : MonoBehaviourPun, IHittable
             photonView.RPC("InstantiateStone", RpcTarget.All, photonView.ViewID);
         }
     }
-  
+
+    public void ShootPistol()
+    {
+        float gunRange = 20.0f;
+
+        Vector3 rayPosition = modelRotator.transform.position + modelRotator.transform.TransformDirection(new Vector3(0, 1, 1));
+        Vector3 rayDirection = modelRotator.transform.TransformDirection(Vector3.forward);
+
+        Debug.DrawRay(rayPosition, rayDirection, Color.red, gunRange);
+
+        if (photonView.IsMine)
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(rayPosition, rayDirection, out hit, gunRange)) 
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    PhotonView photonView = hit.collider.GetComponent<PhotonView>();
+
+                    if (photonView != null)
+                    {
+                        Vector3 hitPosition = hit.point;
+                        Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
+
+                        Debug.Log("ÇÃ·¹ÀÌ¾î ÃÑ ¸ÂÀ½");
+
+                        PhotonNetwork.InstantiateRoomObject("gunFire", hitPosition, hitRotation);
+                    }
+                }
+
+                else if (hit.collider.CompareTag("Map"))
+                {
+                    Debug.Log("ÃÑ ¸ÂÀ½");
+                    Vector3 hitPosition = hit.point;
+                    Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
+                    PhotonNetwork.InstantiateRoomObject("gunFire", hitPosition, hitRotation);
+                }
+
+                else if (hit.collider.CompareTag("NPC"))
+                {
+                    Debug.Log("NPCÃÑ ¸ÂÀ½");
+                    Vector3 hitPosition = hit.point;
+                    Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
+                    PhotonNetwork.InstantiateRoomObject("gunFire", hitPosition, hitRotation);
+                }
+            }
+
+
+        }
+    }
+
+    public void GunOff()
+    {
+        if (weapons[2] != null)
+        {
+            weapons[2].SetActive(false);
+        }
+    }
+
+    public void GunParameterOff()
+    {
+        playerAnim.SetBool("IsShoot", false);
+        canShoot = true;
+    }
+
     // V RPC Methods
     [PunRPC]
     private void SyncHitState(bool hit)
@@ -275,6 +345,18 @@ public class PlayerControl : MonoBehaviourPun, IHittable
 
         Vector3 throwDirection = modelRotator.transform.TransformDirection(new Vector3(0, 5f, 10f));
         stoneRb.AddForce(throwDirection, ForceMode.Impulse);
+    }
+
+    [PunRPC]
+    void ApplyDamage(int targetViewID)
+    {
+        PhotonView targetView = PhotonView.Find(targetViewID);
+
+        if (targetView != null)
+        {
+            targetView.GetComponent<PlayerControl>().GetHit();
+
+        }
     }
 
     // V RPC Methods (Sound)

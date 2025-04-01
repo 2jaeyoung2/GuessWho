@@ -49,7 +49,10 @@ public class AttackState : IPlayerStates
 
             case (ItemType.Gun):
 
-                player.StartCoroutine(AttackShoot());
+                if(player.canShoot == true)
+                {
+                    player.StartCoroutine(AttackShoot());
+                }
                 
                 break;
         }
@@ -122,10 +125,11 @@ public class AttackState : IPlayerStates
     IEnumerator AttackShoot()
     {
         player.playerAnim.SetBool("IsShoot", true);
+        player.canShoot = false;
 
         player.weapons[2].SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        player.playerAnim.SetBool("IsShoot", false);
+
+        yield return new WaitForSeconds(1.0f);
 
         player.isAttackTriggered = false;
     }
