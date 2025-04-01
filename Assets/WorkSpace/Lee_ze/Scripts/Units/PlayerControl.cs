@@ -256,7 +256,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
             photonView.RPC("InstantiateStone", RpcTarget.All, photonView.ViewID);
         }
     }
-
+  
     // V RPC Methods
     [PunRPC]
     private void SyncHitState(bool hit)
