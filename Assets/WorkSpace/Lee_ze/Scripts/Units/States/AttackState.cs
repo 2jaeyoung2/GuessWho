@@ -109,11 +109,9 @@ public class AttackState : IPlayerStates
 
         player.leftBullet--;
         playerUI.ChangeLeftBulletAmount(player);
-        Debug.Log("탄창 감소");
 
         if (player.leftBullet <= 0)
         {
-            Debug.Log("돌 다씀");
             player.nowHaveItems[1] = null;
             player.holdingWeapon = null;
         }
@@ -121,29 +119,24 @@ public class AttackState : IPlayerStates
         player.isAttackTriggered = false;
     }
 
-    IEnumerator AttackShoot()
+    IEnumerator AttackShoot() //총 공격 메서드
     {
-        Debug.Log("총 쏘기");
-        player.playerAnim.SetBool("IsShoot", true);
+        player.playerAnim.SetBool("IsShoot", true); //총 발사 애니메이션 수행
 
-        player.weapons[2].SetActive(true);
-        player.photonView.RPC("GunActive",RpcTarget.Others);
+        player.weapons[2].SetActive(true); //플레이어가 손에 들고있는 무기 활성화
+        player.photonView.RPC("GunActive",RpcTarget.Others); //다른 플레이어에게도 보이도록 동기화
 
-        player.leftBullet--;
-        playerUI.ChangeLeftBulletAmount(player);
+        player.leftBullet--; //탄창 감소
+        playerUI.ChangeLeftBulletAmount(player); //탄창 정보 UI에 적용
 
-        Debug.Log("탄창 감소");
-
-        if (player.leftBullet <= 0)
+        if (player.leftBullet <= 0) //탄창이 모두 소모되면
         {
-            Debug.Log("총 다씀");
-
-            player.nowHaveItems[1] = null;
-            player.holdingWeapon = null;
+            player.nowHaveItems[1] = null; //현재 가지고 있는 아이템 인벤토리 비움
+            player.holdingWeapon = null; //현재 가지고 있는 무기 없음
         }
 
         yield return new WaitForSeconds(1.0f);
 
-        player.isAttackTriggered = false;
+        player.isAttackTriggered = false; 
     }
 }

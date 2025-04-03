@@ -67,8 +67,6 @@ public class ItemSpawnPoint : MonoBehaviourPunCallbacks
             itemSpawnctrl.IsAllItemOff = false;
         }
 
-        Debug.Log(itemNum);
-
         foreach (var spawnPoint in spawnPoints)
         {
             itemSpawnctrl = spawnPoint.GetComponent<ItemSpawnctrl>();

@@ -86,21 +86,22 @@ public sealed class GettableItem : MonoBehaviourPun, IGetable
 
             if (Input.GetKeyDown(KeyCode.F) && player.photonView.IsMine)
             {
-                SendItem(player, itemData);
+                SendItem(player, itemData);//플레이어에게 아이템 데이터 전송
 
                 Instantiate(itemAudioPlayer, transform.position, Quaternion.identity);
 
                 Instantiate(destroyParticle, transform.TransformPoint(0, 1.0f, 0), Quaternion.identity);
-
+                //사운드와 파티클 요소 출력
 
                 photonView.RPC("NoticeIsAllitemOff", RpcTarget.AllBuffered, myParent.name);
 
-                ItemInteractImage.gameObject.SetActive(false);
+                ItemInteractImage.gameObject.SetActive(false);//상호작용 이미지 off
 
                 switch (itemData.itemType)
                 {
                     case ItemType.Stone:
                         PlayerItemGetAndOff(1);
+                        //필드에 존재하는 아이템을 비활성화할 때 사용하는 메서드
 
                         playerUI.ChangeWeaponIcon(player);
                         break;
@@ -115,7 +116,6 @@ public sealed class GettableItem : MonoBehaviourPun, IGetable
                         //    PlayerItemGetAndOff(3);
                         //    break;
                 }
-
             }
         }
     }

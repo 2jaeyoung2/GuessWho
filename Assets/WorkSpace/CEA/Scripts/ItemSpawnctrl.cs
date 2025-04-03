@@ -54,7 +54,6 @@ public class ItemSpawnctrl : MonoBehaviourPun
         if(isAllItemOff == true)
         {
             respawnElapsedTime += Time.deltaTime;
-            //Debug.Log("아이템 리스폰 대기중: " + respawnElapsedTime);
 
             if (respawnCoolTime < respawnElapsedTime)
             {
