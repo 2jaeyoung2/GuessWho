@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable; //Photon Hashtable
-using System;
-using Photon.Realtime;
 
 public class PlayerControl : MonoBehaviourPun, IHittable
 {
@@ -189,13 +187,16 @@ public class PlayerControl : MonoBehaviourPun, IHittable
                 if (nowWeaponArrayNum < 2)
                 {
                     holdingWeapon = nowHaveItems[nowWeaponArrayNum];
+
                     playerUI.ChangeWeaponSelectUI(this);
                 }
 
                 else if (nowWeaponArrayNum >= 2)
                 {
                     nowWeaponArrayNum = 0;
+
                     holdingWeapon = nowHaveItems[nowWeaponArrayNum];
+
                     playerUI.ChangeWeaponSelectUI(this);
                 }
 
@@ -220,14 +221,11 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         if (item.itemType == ItemType.Stone || item.itemType == ItemType.Gun)
         {
             nowWeapon = item;
+
             nowHaveItems[1] = nowWeapon;
+
             leftBullet = item.bulletAmount;
         }
-
-        //else if (item.itemType == ItemType.Whistle)
-        //{
-        //    nowHaveItems[2] = item;
-        //}
     }
 
     public void StonenOff()
@@ -290,7 +288,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         {
             audioSource.PlayOneShot(stoneThrow); 
 
-            photonView.RPC("RPC_PlayThrowSound", RpcTarget.Others, this.transform.position); // RPC로 kick 사운드 나게 함
+            photonView.RPC("RPC_PlayThrowSound", RpcTarget.Others, this.transform.position); // RPC로 stoneThrow 사운드 나게 함
         }
     }
 
@@ -300,7 +298,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         {
             audioSource.PlayOneShot(GunShoot);
 
-            photonView.RPC("RPC_PlayGunSound", RpcTarget.Others, this.transform.position); // RPC로 kick 사운드 나게 함
+            photonView.RPC("RPC_PlayGunSound", RpcTarget.Others, this.transform.position); // RPC로 GunShoot 사운드 나게 함
         }
     }
 
@@ -309,6 +307,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         float gunRange = 20.0f;
 
         Vector3 rayPosition = modelRotator.transform.position + modelRotator.transform.TransformDirection(new Vector3(0, 1, 1));
+
         Vector3 rayDirection = modelRotator.transform.TransformDirection(Vector3.forward);
 
         Debug.DrawRay(rayPosition, rayDirection, Color.red, gunRange);
@@ -317,19 +316,21 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(rayPosition, rayDirection, out hit, gunRange)) //Raycast 발사
+            if (Physics.Raycast(rayPosition, rayDirection, out hit, gunRange)) // Raycast 발사
             {
-                if (hit.collider.CompareTag("Player")) //맞은 collider의 태그가 Player라면
+                if (hit.collider.CompareTag("Player")) // 맞은 collider의 태그가 Player라면
                 {
                     PhotonView photonView = hit.collider.GetComponent<PhotonView>(); 
 
-                    if (photonView != null) //포톤뷰 유무 판별
+                    if (photonView != null) // 포톤뷰 유무 판별
                     {
                         Debug.Log("플레이어 총 맞음"); 
+
                         Vector3 hitPosition = hit.point; 
+
                         Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
-                        photonView.RPC("ApplyDamage", RpcTarget.AllBuffered, photonView.ViewID);
-                        //타격 적용
+
+                        photonView.RPC("ApplyDamage", RpcTarget.AllBuffered, photonView.ViewID); //타격 적용
 
                         Instantiate(GunFire, hitPosition, hitRotation); //맞은 위치에 피격 효과 출력
                     }
@@ -337,18 +338,21 @@ public class PlayerControl : MonoBehaviourPun, IHittable
 
                 else if (hit.collider.CompareTag("Map"))
                 {
-                    Debug.Log("총 맞음");
                     Vector3 hitPosition = hit.point;
+
                     Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
+
                     Instantiate(GunFire, hitPosition, hitRotation);
                 }
 
                 else if (hit.collider.CompareTag("NPC"))
                 {
-                    Debug.Log("NPC총 맞음");
                     Vector3 hitPosition = hit.point;
+
                     Quaternion hitRotation = Quaternion.LookRotation(hit.normal);
+
                     Instantiate(GunFire, hitPosition, hitRotation);
+
                     hit.collider.gameObject.GetComponent<TestingNPC>().GetDie();
                 }
             }
@@ -358,7 +362,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
     }
 
 
-    // V RPC Methods
+    // ▽ RPC Methods
     [PunRPC]
     private void SyncHitState(bool hit)
     {
@@ -383,6 +387,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         stone.GetComponent<StoneController>().whoThrow = whoThrow;
 
         Vector3 throwDirection = modelRotator.transform.TransformDirection(new Vector3(0, 5f, 10f));
+
         stoneRb.AddForce(throwDirection, ForceMode.Impulse);
     }
 
@@ -404,7 +409,7 @@ public class PlayerControl : MonoBehaviourPun, IHittable
         }
     }
 
-    // V RPC Methods (Sound)
+    // ▽ RPC Methods (Sound)
     [PunRPC]
     void RPC_PlayAttackSound(Vector3 soundPosition)
     {

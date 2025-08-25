@@ -1,10 +1,6 @@
 using Photon.Pun;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AttackState : IPlayerStates
 {
@@ -16,7 +12,7 @@ public class AttackState : IPlayerStates
 
     public void EnterState(PlayerControl player)
     {
-        // TOOD: PlayerControl에서 무기 바꾸는 로직. 여기서 하는거 아님
+        // TODO: PlayerControl에서 무기 바꾸는 로직. 여기서 하는거 아님
         playerUI = GameObject.FindGameObjectWithTag("PlayerUI").GetComponent<PlayerUI>();
 
         this.player = player;
@@ -59,7 +55,8 @@ public class AttackState : IPlayerStates
     public void UpdatePerState()
     {
         if (player.isAttackTriggered == false)
-        {// ※ 추가되는 다른 공격 마지막에 player.isAttackTriggered = false;
+        {
+            // ※ 추가되는 다른 공격 마지막에 player.isAttackTriggered = false;
             player.ChangeStateTo(new IdleState());
 
             return;
@@ -103,16 +100,21 @@ public class AttackState : IPlayerStates
         player.weapons[1].SetActive(true);
 
         yield return new WaitForSeconds(1.8f);
+
         player.playerAnim.SetBool("IsThrow", false);
 
         player.leftBullet--;
+
         playerUI.ChangeLeftBulletAmount(player);
+
         Debug.Log("탄창 감소");
 
         if (player.leftBullet <= 0)
         {
             Debug.Log("돌 다씀");
+
             player.nowHaveItems[1] = null;
+
             player.holdingWeapon = null;
         }
 
@@ -122,12 +124,15 @@ public class AttackState : IPlayerStates
     IEnumerator AttackShoot()
     {
         Debug.Log("총 쏘기");
+
         player.playerAnim.SetBool("IsShoot", true);
 
         player.weapons[2].SetActive(true);
+
         player.photonView.RPC("GunActive",RpcTarget.Others);
 
         player.leftBullet--;
+
         playerUI.ChangeLeftBulletAmount(player);
 
         Debug.Log("탄창 감소");
@@ -137,6 +142,7 @@ public class AttackState : IPlayerStates
             Debug.Log("총 다씀");
 
             player.nowHaveItems[1] = null;
+
             player.holdingWeapon = null;
         }
 
