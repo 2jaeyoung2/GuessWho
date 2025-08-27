@@ -24,6 +24,8 @@ public class ApologizeState : IPlayerStates
     {
         player.StartCoroutine(Apologize());
 
+        // ¡ä State ÀüÈ¯
+
         if (player.isNPC == false)
         {
             player.ChangeStateTo(new IdleState());

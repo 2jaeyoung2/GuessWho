@@ -54,6 +54,8 @@ public class AttackState : IPlayerStates
 
     public void UpdatePerState()
     {
+        // ▽ State 전환
+
         if (player.isAttackTriggered == false)
         {
             // ※ 추가되는 다른 공격 마지막에 player.isAttackTriggered = false;

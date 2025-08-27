@@ -19,6 +19,8 @@ public class IdleState : IPlayerStates
 
         player.playerAnim.SetFloat("Speed", player.moveSpeed / 0.12f);
 
+        // ¡ä State ÀüÈ¯
+
         if (player.direction != Vector2.zero)
         {
             player.ChangeStateTo(new MoveState());

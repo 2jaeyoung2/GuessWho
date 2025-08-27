@@ -14,7 +14,7 @@ public class MoveState : IPlayerStates
     {
         PlayerMovement();
 
-        // V State 전환
+        // ▽ State 전환
         if (player.direction == Vector2.zero)
         {
             player.ChangeStateTo(new IdleState());
